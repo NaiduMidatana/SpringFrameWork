@@ -16,6 +16,7 @@ public class MainMethod {
 	  int id= cd.getCustomerId();
 	  String name = cd.getCustomerName();
 	  String addr = cd.getCustomerAddress();
+	  System.out.println(cd);
 	  System.out.println(id);
 	  System.out.println(name);
 	  System.out.println(addr);
