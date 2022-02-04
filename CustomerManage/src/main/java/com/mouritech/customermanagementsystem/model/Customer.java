@@ -1,9 +1,21 @@
 package com.mouritech.customermanagementsystem.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Customer {
  
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "custId")
 	private int custId;
+	@Column(name = "custName")
 	private String custName;
+	@Column(name = "custAddress")
 	private String custAddress;
 	public int getCustId() {
 		return custId;

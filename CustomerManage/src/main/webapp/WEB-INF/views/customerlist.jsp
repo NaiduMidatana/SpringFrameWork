@@ -19,7 +19,7 @@
 			<th>CustomerAddress </th>
 		</tr> 
 		
-		<c:forEach items = "${Customers.customers}" var="cus" >
+		<c:forEach items = "${Customers}" var="cus" >
 		
 		 <tr>
 			<td><c:out value= "${cus.custId}" /></td>

@@ -1,36 +1,47 @@
 package com.mouritech.customermanagementsystem.controller;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
 
 import com.mouritech.customermanagementsystem.model.Customer;
-import com.mouritech.customermanagementsystem.model.CustomerList;
+import com.mouritech.customermanagementsystem.service.CustomerService;
 
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
 
+	@Autowired
+	private CustomerService custService;
 
-	public List<Customer> custList() {
-		List<Customer> cust = new ArrayList<Customer>();
-		cust.add(new Customer(222,"mahesh","hyderabad"));
-		cust.add(new Customer(333,"prabhas","america"));
-		cust.add(new Customer(444,"charan","vizag"));
-		return cust;
-		
-	}
+	
+	 @GetMapping("/showForm")
+	 public String showFormForAdd(Model model) {
+		 Customer newCust = new Customer();
+		 model.addAttribute("customer", newCust);
+		return "customerform";
+		 
+	 }
+	 
+	 @PostMapping("/saveCustomer")
+	 public String saveOrder(@ModelAttribute("customer") Customer theNewCustomer) {
+		 custService.saveCustomer(theNewCustomer);
+		 return "redirect:/customer/listcustomers";
+	 }
+	
 
-	@RequestMapping(value = "/listcustomers", method = RequestMethod.GET)
+	@RequestMapping(value = "/listcustomers")
 	  public String getUsers(Model model) throws Exception{
-	    List<Customer> custs = custList();
-	    CustomerList newcustList = new CustomerList();
-	    newcustList.setCustomers(custs);
-	    model.addAttribute("Customers", newcustList);
+	    List<Customer> custs = custService.getAllCustomers();
+	    model.addAttribute("Customers", custs);
 	    return "customerlist";
 	  }
 }
